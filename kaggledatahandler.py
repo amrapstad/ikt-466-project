@@ -1,4 +1,5 @@
 import itertools
+import os
 
 class KaggleDataHandler():
     def __init__(self):
@@ -9,13 +10,13 @@ class KaggleDataHandler():
     
         target_test_fold_names = []
         for fold_number in target_test_folds:
-            target_test_fold_names.append("fold"+str(fold_number))
+            target_test_fold_names.append("fold"+str(fold_number+1))
 
         target_training_fold_names = []
         for fold_number in folds:
             if (fold_number in target_test_folds):
                 continue
-            target_training_fold_names.append("fold"+str(fold_number))
+            target_training_fold_names.append("fold"+str(fold_number+1))
 
         #print("Test folds:", target_test_fold_names)
         #print("Training folds:", target_training_fold_names)
@@ -28,17 +29,54 @@ class KaggleDataHandler():
         else:
             combinations = [i for i in range(10)]
 
-        validations_set = []
+        dataset_folds = []
         for combination in combinations:
-            validations_set.append(self.create_split(combination))
-        return validations_set
+            dataset_folds.append(self.create_split(combination))
+        
+        datasets_filepath_organized = []
+        for dataset in dataset_folds:
+            new_dataset = []
+            test_folds = {}
+            training_folds = {}
+
+            for i, test_fold in enumerate(dataset[0]):
+                folder_path = f'dataset/{test_fold}'
+                files = os.listdir(folder_path)
+                file_paths = []
+                for file in files:
+                    file_path = folder_path+'/'+file
+                    file_paths.append(file_path)
+                test_folds[test_fold] = file_paths 
+            
+            for i, training_fold in enumerate(dataset[1]):
+                folder_path = f'dataset/{training_fold}'
+                files = os.listdir(folder_path)
+                file_paths = []
+                for file in files:
+                    file_path = folder_path+'/'+file
+                    file_paths.append(file_path)
+                training_folds[training_fold] = file_paths 
+                
+            new_dataset.append((test_folds, training_folds))
+            datasets_filepath_organized.append(new_dataset)
+            
+        return datasets_filepath_organized
 
 # EXAMPLE USE CASE
-#KDHandler = KaggleDataHandler()
-#number_of_test_folds = 2
-#validation_sets = KDHandler.create_set(number_of_test_folds)
-#for i, validation_set in enumerate(validation_sets):
-#    print(f'#{i}: ',validation_set)
+KDHandler = KaggleDataHandler()
+number_of_test_folds = 2
+datasets_filepath_organized = KDHandler.create_set(number_of_test_folds)
+for i, dataset in enumerate(datasets_filepath_organized):
+    print(f'#{i}: ')
+    for fold in dataset:
+        print("- Test folds")
+        print(fold[0].keys())
+        print("- Training folds")
+        print(fold[1].keys())
+    print('\n')
+    
+   
+
 
     
 
