@@ -158,7 +158,6 @@ for i, dataset in enumerate(y_datasets_filepath_organized):
             for classID in segment[1][fold]:
                 print(classID)
     print('\n')
-
    
 
 
