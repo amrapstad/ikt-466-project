@@ -1,9 +1,6 @@
-import math, random
-import torch
-import torchaudio
+import math, random, torch, torchaudio
 
 from torchaudio import transforms
-from IPython.display import Audio
 
 class AudioUtil:
     """ Load an audio file. Return the signal as a tensor and the sample rate. """
