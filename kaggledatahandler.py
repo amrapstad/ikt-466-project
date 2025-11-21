@@ -35,7 +35,7 @@ class KaggleDataHandler():
 
         for i, fold_name in enumerate(folds_name):
             folder_path = f'dataset/{fold_name}'
-            files = os.listdir(folder_path)
+            files = sorted(os.listdir(folder_path), key=lambda f: int(f.split("-")[0]))
             file_paths = []
             with open(f'processed_data/{fold_name}.csv', 'w', newline='') as outfile:
                 writer = csv.writer(outfile)
@@ -59,8 +59,8 @@ class KaggleDataHandler():
         datasets_filepath_organized = []
         y_datasets_filepath_organized = []
         for dataset in dataset_folds:
-            new_dataset = []
-            test_folds = {}
+            new_dataset = [] 
+            test_folds = {} 
             training_folds = {}
 
             y_new_dataset = []
@@ -121,10 +121,12 @@ class KaggleDataHandler():
         return None
 
 # EXAMPLE USE CASE
-KDHandler = KaggleDataHandler()
-number_of_test_folds = 2
-datasets_filepath_organized, y_datasets_filepath_organized = KDHandler.create_set(number_of_test_folds)
+#KDHandler = KaggleDataHandler()
+#number_of_test_folds = 2
+#datasets_filepath_organized, y_datasets_filepath_organized = KDHandler.create_set(number_of_test_folds)
 #KDHandler.create_file_to_label_csv()
+
+
 
 """
 for i, dataset in enumerate(datasets_filepath_organized):
@@ -144,6 +146,8 @@ for i, dataset in enumerate(datasets_filepath_organized):
                 print(f'{filename}')
     print('\n')
 """
+
+"""
 for i, dataset in enumerate(y_datasets_filepath_organized):
     print(f'#{i}: ')
     for i, segment in enumerate(dataset):
@@ -158,7 +162,7 @@ for i, dataset in enumerate(y_datasets_filepath_organized):
             for classID in segment[1][fold]:
                 print(classID)
     print('\n')
-   
+"""
 
 
     

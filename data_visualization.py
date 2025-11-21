@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
 from torchaudio.transforms import MelSpectrogram, AmplitudeToDB
+from kaggledatahandler import KaggleDataHandler
+from audiopreprocessing import SoundDS
 
-
-
-
+spectrogram = SoundDS()
 AudioUtilHandler = AudioUtil()
 print_output = True
 
@@ -51,36 +51,20 @@ class visualize:
 
 
     ####### GETTING SPECTROGRAM FOR AUDIO FILE ###########
-    def audio_mel_spectrogram_png(self, audio_file):
+    def audio_mel_spectrogram_png(self, audio_file_path, class_id ):
         #Open audio file to get signal and sample rate
-        sig, sr = AudioUtilHandler.open(audio_file)
+        spec_image = spectrogram.__getitem__(audio_file_path, class_id)
 
         if print_output:
-            print (f"audio_spectrogram_png: Original Sample Rate: {sr}")
-            print (f"audio_spectrogram_png: Original Shape: {sig.shape}")
-        
-        audio = AudioUtilHandler.resample(sig, sr)
-        audio = AudioUtilHandler.convert_to_new_channel(audio, 2)
-        duration_audio = AudioUtilHandler.padding_truncate(audio, 4000)
-        mel_spectrogram = AudioUtilHandler.spectrogram(duration_audio, n_mels=64, n_fft=1024, hop_len=None)
-
-
-        mel_spectrogram
-
-    
-
+            print (f"audio_mel_spectrogram_png: Spectrogram Type: {type(spec_image)}")
+            print (f"audio_mel_spectrogram_png: Spectrogram{spec_image}")
+        return spec_image
 
 
     ######## GETTING AUDIOWAVES FROM AUDIOFILE (raw) ###########
     def audio_waveform_png_raw(self, audio_file):
         #Open audio file to get signal and sample rate
         sig, sr = AudioUtilHandler.open(audio_file)
-
-        
-
-        
-
-
 
         if print_output:
             print (f"audio_waveform_png_raw:  Sample Rate: {sr}")
@@ -117,4 +101,7 @@ audio_visualizer = visualize()
 #audio_visualizer.audio_waveform_png_raw("dataset/fold1/197073-3-3-0.wav")
 
 #siren 
-audio_visualizer.audio_waveform_png_raw("dataset/fold8/133473-8-0-3.wav")
+#audio_visualizer.audio_waveform_png_raw("dataset/fold8/133473-8-0-3.wav")
+
+
+audio_visualizer.audio_mel_spectrogram_png("dataset/fold1/180937-7-2-0.wav", 7)
