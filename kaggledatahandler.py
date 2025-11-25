@@ -6,11 +6,11 @@ class KaggleDataHandler():
     def __init__(self):
         if not os.path.exists('processed_data'):
             os.makedirs('processed_data')
-            self.create_file_to_label_csv()
+            self.__create_file_to_label_csv__()
         pass
 
     # Creating the different combinations based on the training vs testing split ratio
-    def create_split(self, target_test_folds):
+    def __create_split__(self, target_test_folds):
         folds = [i for i in range(10)]
     
         target_test_fold_names = []
@@ -27,7 +27,7 @@ class KaggleDataHandler():
         #print("Training folds:", target_training_fold_names)
         return (target_test_fold_names, target_training_fold_names)
     
-    def create_file_to_label_csv(self):
+    def __create_file_to_label_csv__(self):
         folds_name = []
         folds = [i for i in range(10)]
         for fold_number in folds:
@@ -44,8 +44,8 @@ class KaggleDataHandler():
                     y_value = self.get_class_id(file)
                     writer.writerow([file, y_value])
 
-    def get_combinations(number_of_test_folds):
-        combinations= []
+    def create_splits(self, number_of_test_folds):
+        combinations = []
         if number_of_test_folds > 1:
             combinations = list(itertools.combinations(range(10), number_of_test_folds))
         else:
@@ -53,7 +53,9 @@ class KaggleDataHandler():
 
         dataset_folds = []
         for combination in combinations:
-            dataset_folds.append(self.create_split(combination))
+            output = self.__create_split__(combination)
+            dataset_folds.append(output)
+        return dataset_folds
 
     # Creating datastructure that contains the filepath to the different .wav based on the combinations found
     def create_set(self):
@@ -70,12 +72,12 @@ class KaggleDataHandler():
             file_paths = []
             y_values = []
             for file in files:
-                print("Wait.....")
+                #print("Wait.....")
                 file_path = folder_path+'/'+file
                 file_paths.append(file_path)
                 y_value = self.get_class_id_pre_data(fold,file)
                 y_values.append(y_value)
-                print("Wait..")
+                #print("Wait..")
             datasets_filepath_organized[fold] = file_paths
             y_datasets_filepath_organized[fold] = y_values
         return datasets_filepath_organized, y_datasets_filepath_organized
@@ -100,6 +102,8 @@ class KaggleDataHandler():
         return None
 
 # EXAMPLE USE CASE
+
+"""
 KDHandler = KaggleDataHandler()
 number_of_test_folds = 2
 datasets_filepath_organized, y_datasets_filepath_organized = KDHandler.create_set()
@@ -107,11 +111,4 @@ datasets_filepath_organized, y_datasets_filepath_organized = KDHandler.create_se
 
 print(datasets_filepath_organized.keys())
 print(datasets_filepath_organized["fold1"])
-
-
-    
-
-        
-            
-
-        
+"""
