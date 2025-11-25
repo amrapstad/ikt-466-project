@@ -19,9 +19,6 @@ class SoundDS(Dataset):
         # Absolute file path of the audio file - concatenate with the audio directory of the relative path
         audio_file = filepath
 
-
-
-
         audio = AudioUtil.open(audio_file)
 
 

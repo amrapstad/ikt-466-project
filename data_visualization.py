@@ -125,10 +125,10 @@ class visualize:
 
 audio_visualizer = visualize()
 #dogbark
-#audio_visualizer.audio_waveform_png_raw("dataset/fold1/197073-3-3-0.wav")
+audio_visualizer.audio_waveform_png_raw("dataset/fold1/197073-3-3-0.wav")
 
 #siren 
-#audio_visualizer.audio_waveform_png_raw("dataset/fold8/133473-8-0-3.wav")
+audio_visualizer.audio_waveform_png_raw("dataset/fold8/133473-8-0-3.wav")
 
-#audio_visualizer.audio_waveform_png_raw("dataset/fold1/180937-7-2-0.wav")
-#audio_visualizer.audio_mel_spectrogram_png("dataset/fold1/180937-7-2-0.wav", 7)
+audio_visualizer.audio_waveform_png_raw("dataset/fold1/180937-7-2-0.wav")
+audio_visualizer.audio_mel_spectrogram_png("dataset/fold1/180937-7-2-0.wav", 7)
