@@ -16,7 +16,7 @@ spectrogram_process = SoundDS()
 AudioUtilHandler = AudioUtil()
 data_handler = KaggleDataHandler()
 
-print_output = True
+print_output = False
 
 
 class visualize: 
@@ -171,7 +171,13 @@ class visualize:
 
 
     #get the augmented spectrgram from the preprocessed audio file and plot it as png
-    def audio_mel_spectrogram_png(self, audio_path, class_id):
+    def audio_mel_spectrogram_png(self, audio_path):
+
+        sliced_file_name = Path(audio_path).name
+        class_id = data_handler.get_class_id(sliced_file_name)
+        if print_output:
+            print(f"Class ID for {audio_path} is {class_id}")
+
         augmented_spectrogram, _ = spectrogram_process.__getitem__(audio_path, class_id)
         aug_spec_np = augmented_spectrogram[0].numpy()
 
@@ -181,7 +187,7 @@ class visualize:
 
 
     #get the mel spectrgram from the raw audio file not preprocessed and plot it as png
-    def audio_mel_spectrogram_raw_png(self, audio_path, class_id):
+    def audio_mel_spectrogram_raw_png(self, audio_path):
         mel_spectrogram_transform = MelSpectrogram(
             sample_rate=44100,
             n_fft=2048,
@@ -204,8 +210,8 @@ audio_visualizer = visualize()
 audio_visualizer.audio_waveform_png_preprocessed("dataset/fold1/197073-3-3-0.wav")
 audio_visualizer.audio_waveform_png_raw("dataset/fold1/197073-3-3-0.wav")
 
-audio_visualizer.audio_mel_spectrogram_raw_png("dataset/fold1/197073-3-3-0.wav", 3)
-audio_visualizer.audio_mel_spectrogram_png("dataset/fold1/197073-3-3-0.wav", 3)
+audio_visualizer.audio_mel_spectrogram_raw_png("dataset/fold1/197073-3-3-0.wav")
+audio_visualizer.audio_mel_spectrogram_png("dataset/fold1/197073-3-3-0.wav")
 
 
 
