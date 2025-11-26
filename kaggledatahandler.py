@@ -14,14 +14,23 @@ class KaggleDataHandler():
         folds = [i for i in range(10)]
     
         target_test_fold_names = []
-        for fold_number in target_test_folds:
-            target_test_fold_names.append("fold"+str(fold_number+1))
+        if isinstance(target_test_folds, int):
+            target_test_fold_names.append("fold"+str(target_test_folds+1))
+        else:
+            for fold_number in target_test_folds:
+                target_test_fold_names.append("fold"+str(fold_number+1))
 
         target_training_fold_names = []
-        for fold_number in folds:
-            if (fold_number in target_test_folds):
-                continue
-            target_training_fold_names.append("fold"+str(fold_number+1))
+        if isinstance(target_test_folds, int):
+            for fold_number in folds:
+                if fold_number == target_test_folds:
+                    continue
+                target_training_fold_names.append("fold"+str(fold_number+1))
+        else:
+            for fold_number in folds:
+                if (fold_number in target_test_folds):
+                    continue
+                target_training_fold_names.append("fold"+str(fold_number+1))
 
         #print("Test folds:", target_test_fold_names)
         #print("Training folds:", target_training_fold_names)
@@ -50,6 +59,7 @@ class KaggleDataHandler():
             combinations = list(itertools.combinations(range(10), number_of_test_folds))
         else:
             combinations = [i for i in range(10)]
+        
 
         dataset_folds = []
         for combination in combinations:
@@ -103,12 +113,11 @@ class KaggleDataHandler():
 
 # EXAMPLE USE CASE
 
-"""
+
 KDHandler = KaggleDataHandler()
-number_of_test_folds = 2
-datasets_filepath_organized, y_datasets_filepath_organized = KDHandler.create_set()
+number_of_test_folds = 1
+sets = KDHandler.create_splits(number_of_test_folds)
 #KDHandler.create_file_to_label_csv()
 
-print(datasets_filepath_organized.keys())
-print(datasets_filepath_organized["fold1"])
-"""
+#print(datasets_filepath_organized.keys())
+#print(datasets_filepath_organized["fold1"])
