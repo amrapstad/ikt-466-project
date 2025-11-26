@@ -76,7 +76,7 @@ class KaggleDataHandler():
                 file_path = folder_path+'/'+file
                 file_paths.append(file_path)
                 y_value = self.get_class_id_pre_data(fold,file)
-                y_values.append(y_value)
+                y_values.append(y_value)                                                                                    m
                 #print("Wait..")
             datasets_filepath_organized[fold] = file_paths
             y_datasets_filepath_organized[fold] = y_values
