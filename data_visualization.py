@@ -188,12 +188,7 @@ class visualize:
 
     #get the mel spectrgram from the raw audio file not preprocessed and plot it as png
     def audio_mel_spectrogram_raw_png(self, audio_path):
-        mel_spectrogram_transform = MelSpectrogram(
-            sample_rate=44100,
-            n_fft=2048,
-            hop_length=512,
-            n_mels=128
-        )
+        mel_spectrogram_transform = MelSpectrogram(sample_rate=44100, n_fft=2048, hop_length=512, n_mels=128)
         amplitude_to_db_transform = AmplitudeToDB()
 
         sig, sr = AudioUtilHandler.open(audio_path)
