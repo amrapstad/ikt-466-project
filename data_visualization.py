@@ -16,7 +16,7 @@ spectrogram_process = SoundDS()
 AudioUtilHandler = AudioUtil()
 data_handler = KaggleDataHandler()
 
-print_output = False
+print_output = True
 
 
 class visualize: 
@@ -201,12 +201,14 @@ class visualize:
 
 
 audio_visualizer = visualize()
-#dogbark
-audio_visualizer.audio_waveform_png_preprocessed("dataset/fold1/197073-3-3-0.wav")
-audio_visualizer.audio_waveform_png_raw("dataset/fold1/197073-3-3-0.wav")
 
-audio_visualizer.audio_mel_spectrogram_raw_png("dataset/fold1/197073-3-3-0.wav")
-audio_visualizer.audio_mel_spectrogram_png("dataset/fold1/197073-3-3-0.wav")
+file = "dataset/fold1/197073-3-3-0.wav"
+
+#dogbark
+audio_visualizer.audio_waveform_png_preprocessed(file)
+audio_visualizer.audio_waveform_png_raw(file)
+audio_visualizer.audio_mel_spectrogram_raw_png(file)
+audio_visualizer.audio_mel_spectrogram_png(file)
 
 
 
