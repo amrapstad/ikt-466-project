@@ -13,7 +13,7 @@ class AudioClassifier(nn.Module):
         self.conv1 = nn.Conv2d(2, 8, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2))
         self.relu1 = nn.ReLU()
         self.bn1 = nn.BatchNorm2d(8)
-        init.kaiming_normal_(self.conv2.weight, nonlinearity='relu')
+        init.kaiming_normal_(self.conv1.weight, nonlinearity='relu')
         self.conv1.bias.data.zero_()
         conv_layers += [self.conv1, self.relu1, self.bn1]
 
@@ -29,7 +29,7 @@ class AudioClassifier(nn.Module):
         self.conv3 = nn.Conv2d(16, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
         self.relu3 = nn.ReLU()
         self.bn3 = nn.BatchNorm2d(32)
-        init.kaiming_normal_(self.conv2.weight, nonlinearity='relu')
+        init.kaiming_normal_(self.conv3.weight, nonlinearity='relu')
         self.conv3.bias.data.zero_()
         conv_layers += [self.conv3, self.relu3, self.bn3]
 
@@ -37,7 +37,7 @@ class AudioClassifier(nn.Module):
         self.conv4 = nn.Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
         self.relu4 = nn.ReLU()
         self.bn4 = nn.BatchNorm2d(64)
-        init.kaiming_normal_(self.conv2.weight, nonlinearity='relu')
+        init.kaiming_normal_(self.conv4.weight, nonlinearity='relu')
         self.conv4.bias.data.zero_()
         conv_layers += [self.conv4, self.relu4, self.bn4]
 
