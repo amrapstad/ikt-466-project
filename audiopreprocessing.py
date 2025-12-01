@@ -4,9 +4,7 @@ import torchaudio
 
 class SoundDS(Dataset):
     """ Sound Dataset. """
-    def __init__(self, df, data_path):
-        self.df = df                #
-        self.data_path = data_path  # Data path for the .wav files
+    def __init__(self):
         self.duration = 4000        # Duration of the .wav files in milliseconds
         self.sr = 44100             # Sample rate: 44100 Hz
         self.channel = 2            # Amount of channels (two is stereo)
@@ -16,15 +14,14 @@ class SoundDS(Dataset):
         """ Return the length of the dataset. """
         return len(self.df)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, filepath, class_id):
         """ Get the i'th item in dataset. """
         # Absolute file path of the audio file - concatenate with the audio directory of the relative path
-        audio_file = self.data_path + self.df.loc[idx, 'relative_path']
-
-        # Get Class ID
-        class_id = self.df.loc[idx, 'class_id']
+        audio_file = filepath
 
         audio = AudioUtil.open(audio_file)
+
+
 
         reaudio = AudioUtil.resample(audio, self.sr)
         rechannel = AudioUtil.convert_to_new_channel(reaudio, self.channel)
